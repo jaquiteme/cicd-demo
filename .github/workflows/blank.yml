@@ -28,8 +28,7 @@ jobs:
       # Checks-out another repo
       - uses: actions/checkout@v3
         with: 
-          name: jaquiteme/todo-app-front
-          refs: refs/heads/release
+          repository: jaquiteme/todo-app-front
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
