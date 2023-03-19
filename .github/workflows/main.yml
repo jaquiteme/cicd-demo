@@ -25,12 +25,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-      # Checks-out another repo
+      # Checks-out jaquiteme/todo-app-front repo
       - uses: actions/checkout@v3
         with: 
           repository: jaquiteme/todo-app-front
           path: todo-app-front
 
+      # Following steps are required for building and deploying to docker hub
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         
@@ -42,6 +43,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
