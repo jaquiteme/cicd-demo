@@ -49,5 +49,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: 202047/todo-app-front:latest
+          tags: 202047/todo-app-front:${{ github.sha.substring(0, 6) }}
           file: Dockerfile
