@@ -31,7 +31,9 @@ jobs:
 
       # Following steps are required for building and deploying to docker hub
       - name: Run deploy scripts
-        run: sh deploy.sh
+        run: |
+          chmod +x deploy.sh && \
+          ./deploy.sh
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
