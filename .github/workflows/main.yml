@@ -33,7 +33,7 @@ jobs:
       - name: Run deploy scripts
         run: |
           chmod +x deploy.sh && \
-          ./deploy.sh
+          ./push-to-docker-hub.sh
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
