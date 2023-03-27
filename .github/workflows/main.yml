@@ -32,7 +32,7 @@ jobs:
       # Following steps are required for building and deploying to docker hub
       - name: Run deploy scripts
         run: |
-          chmod +x deploy.sh && \
+          chmod +x push-to-docker-hub.sh && \
           ./push-to-docker-hub.sh
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
