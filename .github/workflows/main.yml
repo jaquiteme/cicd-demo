@@ -30,8 +30,8 @@ jobs:
       # Checks-out jaquiteme/todo-app-front repo
       - uses: actions/checkout@v3
         with: 
-          repository: "jaquiteme/$APP_NAME"
-          path: $APP_NAME
+          repository: "jaquiteme/${{ env.APP_NAME }}"
+          path: ${{ env.APP_NAME }}
           
       # This step build the container image
       - name: Build container image
