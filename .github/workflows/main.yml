@@ -44,7 +44,7 @@ jobs:
       - name: Build container image
         uses: redhat-actions/buildah-build@v2
         with:
-          image: "${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}"
+          image: "${{ env.REGISTRY }}/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}"
           tags: "${{ steps.get-container-image.outputs.image_tag }}"
           containerfiles: |
             ./Dockerfile
