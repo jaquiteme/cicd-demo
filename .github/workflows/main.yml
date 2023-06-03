@@ -7,9 +7,12 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+# Global variables for this action
+env:
+  REGISTRY: "hub.docker.com"
+  APP_NAME: "todo-app-front"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -26,15 +29,24 @@ jobs:
       # Checks-out jaquiteme/todo-app-front repo
       - uses: actions/checkout@v3
         with: 
-          repository: jaquiteme/todo-app-front
-          path: todo-app-front
-
-      # Following steps are required for building and deploying to docker hub
-      - name: Run deploy scripts
-        run: |
-          chmod +x push-to-docker-hub.sh && \
-          ./push-to-docker-hub.sh
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-          GITHUB_SHA: ${{ github.sha }}
+          repository: "jaquiteme/${{ env.APP_NAME }}"
+          path: ${{ env.APP_NAME }}
+          
+      # This step build the container image
+      - name: Build container image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: "${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}"
+          tags: "${{ github.sha }}"
+          containerfiles: |
+            ./Dockerfile
+      # This step push the container image to a the defined registry
+      - name: "Push to the container registry : ${{ env.REGISTRY }}"
+        id: "push-to-${{ env.REGISTRY }}"
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: "${{ steps.build-image.outputs.image }}"
+          tags: "${{ steps.build-image.outputs.tags }}"
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
