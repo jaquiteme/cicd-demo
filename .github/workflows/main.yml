@@ -42,9 +42,10 @@ jobs:
           
       # This step build the container image
       - name: Build container image
+        id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
-          image: "${{ env.REGISTRY }}/${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}"
+          image: "${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}"
           tags: "${{ steps.get-container-image.outputs.image_tag }}"
           containerfiles: |
             ./Dockerfile
