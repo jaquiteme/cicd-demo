@@ -14,6 +14,7 @@ on:
 env:
   REGISTRY: "hub.docker.com"
   APP_NAME: "todo-app-front"
+  GITHUB_SHA: "${{ github.sha }}"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -33,12 +34,18 @@ jobs:
           repository: "jaquiteme/${{ env.APP_NAME }}"
           path: ${{ env.APP_NAME }}
           
+      # This step is used to set an image tag variable    
+      - name: Get container image tag
+        id: "get-container-image"
+        # GITHUB_OUTPUT is used to get output as key/value pair
+        run: echo "image_tag=${GITHUB_SHA::6}" >> "$GITHUB_OUTPUT"
+          
       # This step build the container image
       - name: Build container image
         uses: redhat-actions/buildah-build@v2
         with:
           image: "${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}"
-          tags: "${{ github.sha }}"
+          tags: "${{ steps.get-container-image.outputs.image_tag }}"
           containerfiles: |
             ./Dockerfile
       # This step push the container image to a the defined registry
