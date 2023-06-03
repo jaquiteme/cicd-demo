@@ -43,7 +43,7 @@ jobs:
             ./Dockerfile
       # This step push the container image to a the defined registry
       - name: "Push to the container registry : $REGISTRY"
-        id: "push-to-$REGISTRY"
+        id: "push-to-registry"
         uses: redhat-actions/push-to-registry@v2
         with:
           image: "${{ steps.build-image.outputs.image }}"
