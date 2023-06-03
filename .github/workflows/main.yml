@@ -1,4 +1,4 @@
-name: todo-app-front CI
+name: todo-app-front-CI
 
 # Controls when the workflow will run
 on:
@@ -18,8 +18,8 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  # This workflow contains a single job called "build-and-push"
+  build-and-push:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
