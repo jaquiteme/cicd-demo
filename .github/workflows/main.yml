@@ -1,4 +1,4 @@
-name: CI
+name: todo-app-front CI
 
 # Controls when the workflow will run
 on:
@@ -9,6 +9,7 @@ on:
     branches: [ "main" ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  
 # Global variables for this action
 env:
   REGISTRY: "hub.docker.com"
