@@ -12,7 +12,7 @@ on:
   
 # Global variables for this action
 env:
-  REGISTRY: "hub.docker.com"
+  REGISTRY: "docker.io"
   APP_NAME: "todo-app-front"
   GITHUB_SHA: "${{ github.sha }}"
 
